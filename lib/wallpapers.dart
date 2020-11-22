@@ -39,6 +39,9 @@ class _WallpapersState extends State<Wallpapers> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
+         backgroundColor: Colors.transparent,
+         
+
         title: Text(
           "WallpaperClub",
           style: TextStyle(
@@ -46,9 +49,97 @@ class _WallpapersState extends State<Wallpapers> {
             color: Colors.white,
           ),
         ),
-        elevation: 0.0,
+        actions:<Widget> [
+          IconButton(
+            icon: Icon(Icons.search,
+            color:Colors.white),
+            onPressed: (){
+              //search
+            },
+
+            )
+        ],
       ),
-      body: GridView.builder(
+
+         drawer: Drawer(child: ListView(
+
+        padding:EdgeInsets.zero,
+        children:<Widget>[
+
+          DrawerHeader(child: Text('Dashboard'),
+          decoration: BoxDecoration(
+
+            color:Colors.black,
+
+
+          ),
+          
+          
+          ),
+
+          ListTile(
+            title: Text('wallpapers'),
+            onTap: (){
+
+            },
+
+
+
+          ),
+
+           ListTile(
+            title: Text('Login'),
+            onTap: (){
+
+            },
+
+
+
+          ),
+
+
+          ListTile(
+
+            title: Text('Register'),
+            onTap: (){
+
+              Navigator.pop(context);
+
+            },
+          ),
+           ListTile(
+            title: Text('Setting'),
+            onTap: (){
+
+            },
+
+
+
+          ),
+
+           ListTile(
+            title: Text('Contact us'),
+            onTap: (){
+
+            },
+
+
+
+          ),
+
+
+
+
+        ]
+
+
+
+
+      ),
+      
+    ),
+      body: 
+      GridView.builder(
         itemCount: Global.photos.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3,
@@ -65,7 +156,11 @@ class _WallpapersState extends State<Wallpapers> {
               );
             },
             child: Container(
-              decoration: BoxDecoration(
+              decoration: BoxDecoration(borderRadius:
+                                                  BorderRadius.circular(
+                                                20.0,
+                                              ),
+
                 color: Colors.white,
                 image: DecorationImage(
                   image: NetworkImage(
@@ -77,6 +172,7 @@ class _WallpapersState extends State<Wallpapers> {
             ),
           );
         },
+      
       ),
     );
   }
