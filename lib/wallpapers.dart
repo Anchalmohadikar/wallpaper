@@ -1,8 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hello/Global.dart';
+import 'package:hello/data/data.dart';
+import 'package:hello/model/categories.dart';
 import 'package:hello/model/photos.dart';
 import 'package:http/http.dart' as http;
+
 
 class Wallpapers extends StatefulWidget {
   @override
@@ -11,9 +14,10 @@ class Wallpapers extends StatefulWidget {
 
 class _WallpapersState extends State<Wallpapers> {
   getwallpaper() async {
-    await http.get("https://api.pexels.com/v1/search?query=nature", headers: {
+    await http.get("https://api.pexels.com/v1/search?query=nature", headers:  {
       "Authorization":
-          "563492ad6f917000010000014cf4949fca7045f6b73fab576533a5da"
+          "2efc3571549fc0e7282bf364453445ec79339cc7"
+
     }).then((res) {
       print(res.body);
 
@@ -26,9 +30,11 @@ class _WallpapersState extends State<Wallpapers> {
 
     setState(() {});
   }
-
+ List<Categorie> categorie= new List();
   @override
   void initState() {
+
+    categorie= getCategories();
     // TODO: implement initState
     super.initState();
     getwallpaper();
@@ -60,21 +66,48 @@ class _WallpapersState extends State<Wallpapers> {
             )
         ],
       ),
+    
 
-         drawer: Drawer(child: ListView(
+         drawer: Drawer(
+           child: ListView(
 
         padding:EdgeInsets.zero,
         children:<Widget>[
 
-          DrawerHeader(child: Text('Dashboard'),
+          DrawerHeader(
+            
           decoration: BoxDecoration(
-
-            color:Colors.black,
-
-
+            color: Colors.black,
           ),
           
           
+         child: Container(
+              child:Column(
+             children: <Widget>[
+
+
+ 
+              
+                Container(
+                  decoration: BoxDecoration(
+                    shape:BoxShape.circle,
+
+            image:DecorationImage(
+            image:NetworkImage('https://play-lh.googleusercontent.com/XDFSs2DHhEbLwovKULM51pZ2CQcWTLrK1aO1KONSn3DR65zbrZCJBAJZ_nGA5doYfhQ'),
+          
+            ),
+                
+              ),
+              
+
+          ),
+
+           
+            ],
+                  
+              ),
+          ),
+        
           ),
 
           ListTile(
@@ -122,25 +155,54 @@ class _WallpapersState extends State<Wallpapers> {
             onTap: (){
 
             },
-
-
-
-          ),
+),
 
 
 
 
         ]
-
-
-
-
-      ),
+),
       
     ),
+
+     
+               
+
+   
       body: 
-      GridView.builder(
+
+      Container(child: Column(
+        children:<Widget> [
+          SizedBox(height:16),
+         
+         Container(
+           height: 70,
+           child: ListView.builder(
+
+            itemCount: categorie.length,
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context,index){
+return CategoriesTile(
+  categorie: categorie[index].categorieName,
+  imgUrls: categorie[index].imgUrl,
+
+  
+);
+              
+            }
+
+
+          )
+
+),
+Container(child: 
+      
+          
+GridView.builder(
         itemCount: Global.photos.length,
+         scrollDirection: Axis.vertical,
+
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3,
             mainAxisSpacing: 5,
@@ -155,7 +217,11 @@ class _WallpapersState extends State<Wallpapers> {
                 'fullpage',
               );
             },
-            child: Container(
+            
+            
+            
+            
+          child: Container(
               decoration: BoxDecoration(borderRadius:
                                                   BorderRadius.circular(
                                                 20.0,
@@ -170,10 +236,57 @@ class _WallpapersState extends State<Wallpapers> {
                 ),
               ),
             ),
+
+
           );
         },
       
       ),
+
+
+        )
+
+
+
+
+
+
+      
+      ],),)
+       );
+    
+  }
+}
+        
+        
+
+  
+    
+               
+      
+
+
+      
+
+    
+
+class CategoriesTile extends StatelessWidget {
+
+  final String imgUrls , categorie;
+
+  CategoriesTile({@required this.imgUrls,@required this.categorie});
+  @override
+  Widget build(BuildContext context) {
+    return Container(child:Stack(children:<Widget> [
+
+
+      Container(child: Image.network(imgUrls),
+      )
+    ],) 
+
+
+    
     );
+    
   }
 }
