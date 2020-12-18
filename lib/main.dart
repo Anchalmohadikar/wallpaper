@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hello/fullpage.dart';
-import 'package:hello/wallpapers.dart';
+import 'package:hello/pages/fullpage.dart';
+import 'package:hello/pages/wallpapers.dart';
 
 void main() {
   runApp(ConfigApp());
@@ -12,7 +12,7 @@ class ConfigApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        primarySwatch: Colors.black,
       ),
       initialRoute: '/',
       routes: {
