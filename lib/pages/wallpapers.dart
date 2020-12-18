@@ -28,7 +28,7 @@ class _WallpapersState extends State<Wallpapers> {
     setState(() {});
   }
 
-  List<Categorie> categorie = List();
+  List<Categorie> categorie = [];
   @override
   void initState() {
     categorie = getCategories();
@@ -40,126 +40,127 @@ class _WallpapersState extends State<Wallpapers> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.black,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          title: Text(
-            "WallpaperClub",
-            style: TextStyle(
-              fontSize: 22,
-              color: Colors.white,
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        title: Text(
+          "WallpaperClub",
+          style: TextStyle(
+            fontSize: 22,
+            color: Colors.white,
+          ),
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search, color: Colors.white),
+            onPressed: () {
+              //search
+            },
+          )
+        ],
+      ),
+      drawer: Drawer(
+        child: ListView(padding: EdgeInsets.zero, children: <Widget>[
+          DrawerHeader(
+            decoration: BoxDecoration(
+              color: Colors.black,
+            ),
+            child: Container(
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image: NetworkImage(
+                            'https://play-lh.googleusercontent.com/XDFSs2DHhEbLwovKULM51pZ2CQcWTLrK1aO1KONSn3DR65zbrZCJBAJZ_nGA5doYfhQ'),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.search, color: Colors.white),
-              onPressed: () {
-                //search
-              },
-            )
-          ],
-        ),
-        drawer: Drawer(
-          child: ListView(padding: EdgeInsets.zero, children: <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.black,
-              ),
-              child: Container(
-                child: Column(
-                  children: <Widget>[
-                    Container(
+          ListTile(
+            title: Text('wallpapers'),
+            onTap: () {},
+          ),
+          ListTile(
+            title: Text('Login'),
+            onTap: () {},
+          ),
+          ListTile(
+            title: Text('Register'),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            title: Text('Setting'),
+            onTap: () {},
+          ),
+          ListTile(
+            title: Text('Contact us'),
+            onTap: () {},
+          ),
+        ]),
+      ),
+      body: Container(
+        child: Column(
+          children: <Widget>[
+            SizedBox(height: 16),
+            Container(
+                height: 70,
+                child: ListView.builder(
+                    itemCount: categorie.length,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return CategoriesTile(
+                        categorie: categorie[index].categorieName,
+                        imgUrls: categorie[index].imgUrl,
+                      );
+                    })),
+            Container(
+              child: GridView.builder(
+                itemCount: Global.photos.length,
+                scrollDirection: Axis.vertical,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    mainAxisSpacing: 5,
+                    crossAxisSpacing: 5,
+                    childAspectRatio: 0.5),
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      Global.Index = index;
+
+                      Navigator.of(context).pushNamed(
+                        'fullpage',
+                      );
+                    },
+                    child: Container(
                       decoration: BoxDecoration(
-                        shape: BoxShape.circle,
+                        borderRadius: BorderRadius.circular(
+                          20.0,
+                        ),
+                        color: Colors.white,
                         image: DecorationImage(
                           image: NetworkImage(
-                              'https://play-lh.googleusercontent.com/XDFSs2DHhEbLwovKULM51pZ2CQcWTLrK1aO1KONSn3DR65zbrZCJBAJZ_nGA5doYfhQ'),
+                            Global.photos[index].src.tiny,
+                          ),
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  );
+                },
               ),
-            ),
-            ListTile(
-              title: Text('wallpapers'),
-              onTap: () {},
-            ),
-            ListTile(
-              title: Text('Login'),
-              onTap: () {},
-            ),
-            ListTile(
-              title: Text('Register'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: Text('Setting'),
-              onTap: () {},
-            ),
-            ListTile(
-              title: Text('Contact us'),
-              onTap: () {},
-            ),
-          ]),
+            )
+          ],
         ),
-        body: Container(
-          child: Column(
-            children: <Widget>[
-              SizedBox(height: 16),
-              Container(
-                  height: 70,
-                  child: ListView.builder(
-                      itemCount: categorie.length,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return CategoriesTile(
-                          categorie: categorie[index].categorieName,
-                          imgUrls: categorie[index].imgUrl,
-                        );
-                      })),
-              Container(
-                child: GridView.builder(
-                  itemCount: Global.photos.length,
-                  scrollDirection: Axis.vertical,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      mainAxisSpacing: 5,
-                      crossAxisSpacing: 5,
-                      childAspectRatio: 0.5),
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        Global.Index = index;
-
-                        Navigator.of(context).pushNamed(
-                          'fullpage',
-                        );
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                            20.0,
-                          ),
-                          color: Colors.white,
-                          image: DecorationImage(
-                            image: NetworkImage(
-                              Global.photos[index].src.tiny,
-                            ),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              )
-            ],
-          ),
-        ));
+      ),
+    );
   }
 }
 
@@ -170,12 +171,13 @@ class CategoriesTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: Stack(
-      children: <Widget>[
-        Container(
-          child: Image.network(imgUrls),
-        )
-      ],
-    ));
+      child: Stack(
+        children: <Widget>[
+          Container(
+            child: Image.network(imgUrls),
+          )
+        ],
+      ),
+    );
   }
 }
